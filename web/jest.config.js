@@ -14,7 +14,8 @@ const customJestConfig = {
     "^@/components/(.*)$": "<rootDir>/src/components/$1",
     "^@/pages/(.*)$": "<rootDir>/src/pages/$1",
   },
-  testEnvironment: "jest-environment-jsdom",
+  setupFilesAfterEnv: ['<rootDir>/config/setupJest.ts'],
+  testEnvironment: 'jsdom',
 };
 
 // createJestConfigを定義することによって、本ファイルで定義された設定がNext.jsの設定に反映されます

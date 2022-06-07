@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
@@ -50,6 +51,14 @@ const Home: NextPage = () => {
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
+          <Link href='/material'>
+            <a
+              data-testid='blog-nav'
+              className='text-gray-300 hover:bg-gray-700 px-3 py-2 rounded'
+            >
+              Blog Page
+            </a>
+          </Link>
         </div>
       </main>
 
