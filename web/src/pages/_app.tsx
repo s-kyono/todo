@@ -1,8 +1,13 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import React from 'react';
+import type { AppProps } from 'next/app';
+import '../styles/globals.scss';
 
-const MyApp = ({ Component, pageProps}: AppProps) => {
+/**
+ * ページ基底
+ * @return {AppProps} SPA(シングルページアプリケーション)ページ基底
+ */
+const App = ({ Component, pageProps}: AppProps) => {
   return <Component {...pageProps} />
 };
 
-export default MyApp
+export default App;
