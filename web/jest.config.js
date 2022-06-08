@@ -13,6 +13,7 @@ const customJestConfig = {
     // aliasを定義 （tsconfig.jsonのcompilerOptions>pathsの定義に合わせる）
     "^@/components/(.*)$": "<rootDir>/src/components/$1",
     "^@/pages/(.*)$": "<rootDir>/src/pages/$1",
+    "^@/config/(.*)$": "<rootDir>/config/$1",
   },
   setupFilesAfterEnv: ['<rootDir>/config/setupJest.ts'],
   testEnvironment: 'jsdom',

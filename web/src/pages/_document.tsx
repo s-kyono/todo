@@ -1,10 +1,10 @@
 import React from 'react';
-import Settings from '../../config/settings.yml';
+import Settings from '@/config/settings';
 import { Html, Head, Main, NextScript } from 'next/document';
 
 /**
  * DOM基底構成
- * @return {}
+ * @return {React.FunctionComponent}
  */
 const Document: React.FunctionComponent = () => {
   const url = Settings.document.url;
