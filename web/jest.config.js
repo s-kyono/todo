@@ -15,6 +15,7 @@ const customJestConfig = {
     "^@/pages/(.*)$": "<rootDir>/src/pages/$1",
     "^@/config/(.*)$": "<rootDir>/config/$1",
     "^@/firebase/(.*)$": "<rootDir>/firebase/$1",
+    "^@/hooks/(.*)$": "<rootDir>/src/hooks/$1",
   },
   setupFilesAfterEnv: ['<rootDir>/config/setupJest.ts'],
   testEnvironment: 'jsdom',

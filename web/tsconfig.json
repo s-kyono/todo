@@ -21,6 +21,7 @@
       "@/pages/*": ["src/pages/*"],
       "@/config/*": ["config/*"],
       "@/firebase/*": ["firebase/*"],
+      "@/hooks/*": ["src/hooks/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
