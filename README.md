@@ -169,4 +169,40 @@
 
 14. ESLint
     - Next.js v11からESLintはNext.jsで追加
-15. storybook, jest等
+15. jest インストール
+
+    ``` sh
+      yarn add -D jest ts-jest react-test-renderer enzyme enzyme-adapter-react-16 enzyme-to-json @types/react-test-renderer @types/jest @types/enzyme-adapter-react-16
+      yarn add -D jest @testing-library/react @testing-library/jest-dom jest-environment-jsdom next-page-tester
+    ```
+
+    - `package.json`に`test` コマンドを追加
+    - 参考記事にてテストコードを実施
+      - [Next.js使ったプロジェクトでテストを書く](https://zenn.dev/slowhand/articles/7bfe83207b434d)
+      - [フロントエンド(Next.js)のテストについてまとめる](https://qiita.com/suzu1997/items/e4ee2fc1f52fbf505481)
+
+    ``` json package.json
+      {
+         "scripts": {
+            "test": "jest --watch",
+         }
+      }
+    ```
+
+16. Material UIインストール
+
+    ``` sh
+       yarn add @mui/material @mui/styled-engine-sc styled-components
+    ```
+
+17. storybook等
+    - 後で調べる
+
+    ``` sh
+      yarn add -D jest ts-jest react-test-renderer enzyme enzyme-adapter-react-16 enzyme-to-json @types/react-test-renderer @types/jest @types/enzyme-adapter-react-16
+      yarn add -D jest @testing-library/react @testing-library/jest-dom
+      yarn add -D jest-environment-jsdom
+      yarn add --dev jest @testing-library/react @types/jest @testing-library/jest-dom @testing-library/dom babel-jest @testing-library/user-event jest-css-modules
+      yarn add next-page-tester
+      yarn add @mui/material @mui/styled-engine-sc styled-components
+    ```
