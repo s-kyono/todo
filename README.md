@@ -1,42 +1,172 @@
 # todo
 
-## Next.js
+## Next.js環境構築
 
+1. Next.jsプロジェクト生成
 
+   ``` sh
+     yarn create next-app PROJECT_NAME
+   ```
 
-## web
+2. プロジェクト階層の生成 (技術最高責任者に任す)
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+   ``` sh
+      cd PROJECT_NAME
+      mkdir src && mv pages src/pages & mv styles src/styles
+   ```
 
-## Getting Started
+3. TypeScriptのインストール
 
-First, run the development server:
+   ``` sh
+      yarn add -D typescript @types/react @types/react-dom @types/node
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+4. `.js`拡張子のファイルを`.ts、.tsx`拡張子に変更
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ``` sh
+      find src/pages -name "_app.js" -or -name "index.js" | sed 'p;s/.js$/.tsx/' | xargs -n2 mv & \\
+      find src/pages/api -name "*.js" | sed 'p;s/.js$/.ts/' | xargs -n2 mv
+   ```
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+5. `tsconfig.json`と`next-env.d.ts`ファイルの追加
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+   ``` sh
+      yarn dev
+   ```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+6. TypeScriptの設定を変更
 
-## Learn More
+   ``` json tsconfig.json
+      "strict": false,
+      ->
+      "strict": true,
+      /*
+         baseUrlにて importの規定ファイルパスを指定
+      */
+      {
+         "compilerOptions": {
+            // add
+            "baseUrl": "."
+         }
+      }
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+7. `_app.tsx`ファイル修正
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ``` javascript src/pages/_app.tsx
+      import { AppProps } from 'next/app';
+      import '../styles/globals.css';
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+      const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
+         return <Component {...pageProps} />;
+      };
 
-## Deploy on Vercel
+      export default MyApp;
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+8. `index.tsx`ファイルを修正
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   ``` javascript src/pages/index.tsx
+      import Head from 'next/head';
+      import Image from 'next/image';
+      import { NextPage } from 'next';
+      import styles from '../styles/Home.module.css';
+
+      const Home: NextPage = () => {
+         //
+         // この中身はそのまま利用します。
+         //
+      };
+      export default Home;
+
+   ```
+
+9. `api/hello.ts`ファイルの修正
+
+   ``` javascript src/pages/api/hello.ts
+      import type { NextApiRequest, NextApiResponse } from 'next';
+      type Data = {
+         name: string;
+      };
+      const hello = (req: NextApiRequest, res: NextApiResponse<Data>) => {
+         res.status(200).json({ name: 'John Doe' });
+      };
+      export default hello;
+
+   ```
+
+10. カスタムドキュメントの追加
+    - metaタグ類やWebフォントの利用などに必要となるカスタムドキュメントファイルを追加
+    - Next.js v11.1.1よりカスタムドキュメントをfunctional componentとして記載可能
+
+    ``` sh
+      touch src/pages/_document.tsx
+    ```
+
+    ``` javascript src/pages/_document.tsx
+      import { Html, Head, Main, NextScript } from 'next/document';
+
+      const MyDocument = () => {
+         const url = '<https://example.com>';
+         const title = 'Demo Next.js';
+         const description = 'Demo of Next.js';
+         return (
+            <Html lang="ja-JP">
+               <Head>
+                  {/* Change the contents of `<Head>` as needed. */}
+                  <meta name="description" content={description} />
+                  <meta name="theme-color" content="#333" />
+                  <meta property="og:type" content="website" />
+                  <meta property="og:title" content={title} />
+                  <meta property="og:url" content={url} />
+                  <meta property="og:description" content={description} />
+                  <meta property="og:site_name" content={title} />
+                  <meta property="og:image" content={`${url}/ogp.png`} />
+                  <meta name="twitter:card" content="summary_large_image" />
+                  <meta name="format-detection" content="telephone=no" />
+                  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+               </Head>
+               <body>
+                  <Main />
+                  <NextScript />
+               </body>
+            </Html>
+         );
+      };
+      export default MyDocument;
+
+    ```
+
+11. Sassインストール
+
+    ``` sh
+      yarn add -D sass
+    ```
+
+12. 起動スクリプト
+    - 同じネットワーク内の他のPCやスマートフォンから開発サーバに接続して閲覧確認できるよう、開発サーバの起動スクリプトを調整
+
+    ``` json packages.json
+      {
+         "scripts": {
+            "dev": "next dev --hostname 0.0.0.0",
+         }
+      }
+    ```
+
+13. Prettierの設定
+    - プロジェクトによって作成するか検討、Prettierの設定ファイルを追加
+
+    ``` json .prettier
+      {
+         "trailingComma": "all",
+         "semi": true,
+         "singleQuote": true,
+         "printWidth": "100",
+         "tabWidth": 2,
+      }
+    ```
+
+14. ESLint
+    - Next.js v11からESLintはNext.jsで追加
+15. storybook, jest等
