@@ -10,12 +10,12 @@ export type ToDo = {
   description: string,
   type: string,
 }
+
 export const getToDos = async (): Promise<ToDo[]> => {
   const toDos = new Array<ToDo>();
   const querySnapshot = await db.collection("todo").get();
   querySnapshot.forEach((doc) => {
     const toDo = doc.data() as ToDo;
-    console.log(toDo);
     toDos.push({ ...toDo});
   });
   return toDos;
